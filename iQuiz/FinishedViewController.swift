@@ -11,7 +11,7 @@ class FinishedViewController: UIViewController {
     
     @IBOutlet weak var performanceLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     
     var score: Int = 0
     var totalQuestions: Int = 0
@@ -28,8 +28,7 @@ class FinishedViewController: UIViewController {
         scoreLabel.text = "\(score) of \(totalQuestions) correct"
     }
     
-    
-    @IBAction func nextButtonTapped(_ sender: UIButton) {
-        navigationController?.popToRootViewController(animated: true)
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "toMainMenu", sender: self)
     }
 }

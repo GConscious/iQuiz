@@ -22,11 +22,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var images = ["math", "marvel", "science"]
     var questions: [(question: String, options: [String], correct: Int)] = []
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         quiz.delegate = self
         quiz.dataSource = self
     }
@@ -52,11 +49,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case 0:
             questions = [
                 ("What is 2 + 2?", ["3", "4", "5"], 1),
-                ("What is 10 / 2?", ["3", "5", "10"], 1)
+                ("What is 10 / 1?", ["3", "5", "10"], 2)
             ]
         case 1:
             questions = [
-                ("Who is Iron Man?", ["Tony Stark", "Bruce Wayne", "Clark Kent"], 0),
+                ("Who is Iron Man?", ["Tony Stark", "Bruce Wayne", "Clark Kent", "Agent Coulson"], 0),
                 ("What is Captain America's shield made of?", ["Adamantium", "Vibranium", "Titanium"], 1)
             ]
         case 2:
@@ -73,7 +70,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "questionSegue" {
             let destinationVC = segue.destination as! QuestionViewController
-            destinationVC.questions = questions
+            destinationVC.allQuestions = questions
+            if let first = questions.first {
+                destinationVC.question = first.question
+                destinationVC.options = first.options
+                destinationVC.correct = first.correct
+                destinationVC.currIndex = 0
+                destinationVC.score = 0
+                destinationVC.answer = nil
+            }
         }
     }
     

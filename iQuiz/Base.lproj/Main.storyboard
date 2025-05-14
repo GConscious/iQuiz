@@ -13,11 +13,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZXT-G2-iCx">
-                                <rect key="frame" x="0.0" y="52" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="-17" width="393" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem title="Settings" id="LA7-ob-lO6">
@@ -79,6 +79,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="FvO-c1-SkH"/>
                     <connections>
                         <outlet property="quiz" destination="Kks-JV-3XH" id="TKF-JO-pfH"/>
                         <segue destination="imS-E8-xW7" kind="show" identifier="questionSegue" id="jji-a7-pTs"/>
@@ -96,10 +97,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEw-AM-BOm">
-                                <rect key="frame" x="37" y="79" width="319" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEw-AM-BOm">
+                                <rect key="frame" x="16" y="120" width="361" height="79"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -124,15 +125,23 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Submit"/>
                                 <connections>
-                                    <action selector="submitAnswer:" destination="imS-E8-xW7" eventType="touchUpInside" id="eEm-9X-rHG"/>
+                                    <action selector="submitTapped:" destination="imS-E8-xW7" eventType="touchUpInside" id="2Lc-NT-kbn"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Instructions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dfh-Dd-zBW">
+                                <rect key="frame" x="26" y="20" width="340" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="orU-ee-C67"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="Nem-Ci-VZY"/>
                     <connections>
+                        <outlet property="instructions" destination="Dfh-Dd-zBW" id="TLj-8S-KCA"/>
                         <outlet property="questionLabel" destination="KEw-AM-BOm" id="cOA-Vr-7lo"/>
                         <outlet property="submitBtn" destination="64Q-II-Rjc" id="Hcv-iz-VYb"/>
                         <outlet property="tableView" destination="ivJ-Lh-YoP" id="vLV-Qf-FjV"/>
@@ -151,13 +160,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Obk-eD-WMR">
-                                <rect key="frame" x="16" y="118" width="361" height="59"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Answer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fb-zA-FT0">
                                 <rect key="frame" x="16" y="335" width="361" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -172,17 +174,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ObQ-1c-C6Y">
-                                <rect key="frame" x="89" y="677" width="62" height="35"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Instructions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C19-xW-77z">
+                                <rect key="frame" x="23" y="83" width="354" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Back"/>
-                                <connections>
-                                    <action selector="backButtonTapped:" destination="VW8-R0-nDm" eventType="touchUpInside" id="Rqr-No-0yW"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Obk-eD-WMR">
+                                <rect key="frame" x="16" y="204" width="361" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQU-tL-Cwz">
-                                <rect key="frame" x="248" y="677" width="60" height="35"/>
+                                <rect key="frame" x="145" y="655" width="102" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Next"/>
@@ -197,17 +204,18 @@
                     <navigationItem key="navigationItem" id="nPJ-TF-QrB"/>
                     <connections>
                         <outlet property="answerLabel" destination="4fb-zA-FT0" id="acE-aU-BSm"/>
-                        <outlet property="backButton" destination="ObQ-1c-C6Y" id="0jw-2h-M94"/>
                         <outlet property="correctLabel" destination="Pez-Ua-Ekf" id="GQg-9C-7ak"/>
+                        <outlet property="instructions" destination="C19-xW-77z" id="Kct-PV-lFX"/>
                         <outlet property="nextButton" destination="XQU-tL-Cwz" id="Vlu-By-c1V"/>
                         <outlet property="question" destination="Obk-eD-WMR" id="mRP-zh-5kE"/>
                         <segue destination="imS-E8-xW7" kind="show" identifier="nextQuestion" id="dI1-yU-FN5"/>
                         <segue destination="2ds-rn-f00" kind="show" identifier="showFinished" id="96s-6C-712"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toMain" id="yGe-l8-09Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KkR-IY-hBa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1672.5190839694656" y="11.971830985915494"/>
+            <point key="canvasLocation" x="1638.9312977099237" y="3.5211267605633805"/>
         </scene>
         <!--Finished View Controller-->
         <scene sceneID="4Jk-mK-4YQ">
@@ -235,9 +243,9 @@
                                 <rect key="frame" x="156" y="550" width="80" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Next"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Back"/>
                                 <connections>
-                                    <action selector="nextButtonTapped:" destination="2ds-rn-f00" eventType="touchUpInside" id="O4n-zC-Zgw"/>
+                                    <action selector="backButtonTapped:" destination="2ds-rn-f00" eventType="touchUpInside" id="pae-8Q-l9X"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -246,18 +254,20 @@
                     </view>
                     <navigationItem key="navigationItem" id="96N-ao-MEa"/>
                     <connections>
-                        <outlet property="nextButton" destination="2W1-rm-w1K" id="IEl-Vt-gIx"/>
+                        <outlet property="backButton" destination="2W1-rm-w1K" id="8TC-cu-OQM"/>
                         <outlet property="performanceLabel" destination="tkT-Hd-6iB" id="XYU-i1-52n"/>
                         <outlet property="scoreLabel" destination="vh9-uH-c6I" id="IUj-YC-9N0"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toMainMenu" id="bGj-eo-5VB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="noc-OC-b5A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2432.8244274809158" y="11.971830985915494"/>
+            <point key="canvasLocation" x="2425" y="4"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="dI1-yU-FN5"/>
+        <segue reference="yGe-l8-09Y"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
