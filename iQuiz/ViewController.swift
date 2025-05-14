@@ -20,6 +20,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var topics = ["Mathematics", "Marvel Super Heros", "Science"]
     var quizDescription = ["Math Quiz", "Marvel Quiz", "Science Quiz"]
     var images = ["math", "marvel", "science"]
+    var questions: [(question: String, options: [String], correct: Int)] = []
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +46,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.cellImage?.image = UIImage(named: images[indexPath.row])
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            questions = [
+                ("What is 2 + 2?", ["3", "4", "5"], 1),
+                ("What is 10 / 2?", ["3", "5", "10"], 1)
+            ]
+        case 1:
+            questions = [
+                ("Who is Iron Man?", ["Tony Stark", "Bruce Wayne", "Clark Kent"], 0),
+                ("What is Captain America's shield made of?", ["Adamantium", "Vibranium", "Titanium"], 1)
+            ]
+        case 2:
+            questions = [
+                ("What planet is known as the Red Planet?", ["Earth", "Mars", "Jupiter"], 1),
+                ("What gas do plants absorb from the atmosphere?", ["Oxygen", "Carbon Dioxide", "Nitrogen"], 1)
+            ]
+        default:
+            questions = []
+        }
+        performSegue(withIdentifier: "questionSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "questionSegue" {
+            let destinationVC = segue.destination as! QuestionViewController
+            destinationVC.questions = questions
+        }
+    }
+    
     
     @IBAction func settingsPressed(_ sender: UIBarButtonItem) {
             let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
