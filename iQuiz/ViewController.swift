@@ -150,9 +150,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func parseQuizData(_ jsonArray: [[String: Any]]) {
         topics = jsonArray.compactMap { $0["title"] as? String }
         quizDescription = jsonArray.compactMap { $0["desc"] as? String }
-        // Optionally handle images if available in JSON
-        images = Array(repeating: "defaultImage", count: topics.count)
-        // Reload your table view
         quiz.reloadData()
     }
 }
