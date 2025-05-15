@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SystemConfiguration
+
 
 class quizCell: UITableViewCell {
     @IBOutlet weak var cellTitle: UILabel!
@@ -26,6 +28,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         quiz.delegate = self
         quiz.dataSource = self
+        let urlString = UserDefaults.standard.string(forKey: "quizDataURL") ?? "https://tednewardsandbox.site44.com/questions.json"
+        fetchQuizData(from: urlString)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,11 +86,74 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    
     @IBAction func settingsPressed(_ sender: UIBarButtonItem) {
-            let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: "Settings", message: "Enter quiz data URL", preferredStyle: .alert)
+            alert.addTextField { textField in
+                textField.placeholder = "Quiz Data URL"
+                textField.text = UserDefaults.standard.string(forKey: "quizDataURL") ?? "https://tednewardsandbox.site44.com/questions.json"
+            }
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alert.addAction(UIAlertAction(title: "Check Now", style: .default, handler: { [weak self] _ in
+                guard let urlField = alert.textFields?.first, let urlString = urlField.text else { return }
+                UserDefaults.standard.set(urlString, forKey: "quizDataURL")
+                self?.fetchQuizData(from: urlString)
+            }))
             present(alert, animated: true)
         }
+    
+    
+    func isNetworkAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }) else { return false }
+        var flags: SCNetworkReachabilityFlags = []
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) { return false }
+        return flags.contains(.reachable) && !flags.contains(.connectionRequired)
+    }
+    
+    func fetchQuizData(from urlString: String) {
+        guard isNetworkAvailable() else {
+            let alert = UIAlertController(title: "Network Error", message: "Network is not available.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
+        guard let url = URL(string: urlString) else { return }
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self?.present(alert, animated: true)
+                    return
+                }
+                guard let data = data else { return }
+                do {
+                    if let jsonArray = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
+                        self?.parseQuizData(jsonArray)
+                    }
+                } catch {
+                    let alert = UIAlertController(title: "Parse Error", message: "Failed to parse quiz data.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self?.present(alert, animated: true)
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    func parseQuizData(_ jsonArray: [[String: Any]]) {
+        topics = jsonArray.compactMap { $0["title"] as? String }
+        quizDescription = jsonArray.compactMap { $0["desc"] as? String }
+        // Optionally handle images if available in JSON
+        images = Array(repeating: "defaultImage", count: topics.count)
+        // Reload your table view
+        quiz.reloadData()
+    }
 }
 
